@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { makeImagePath } from "../utils";
 const Wrapper = styled.div`
   background-color: black;
+  padding-bottom: 200px;
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -49,11 +50,21 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   font-size: 66px;
   background-size: cover;
   background-position: center center;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 const rowVariants = {
   hidden: { x: window.outerWidth + 5 },
   visible: { x: 0 },
   exit: { x: -window.outerWidth - 5 },
+};
+const BoxVariants = {
+  normal: { scale: 1, transition: { type: "tween" } },
+  hover: { scale: 1.3, y: -50, transition: { delay: 0.5, type: "tween" } },
 };
 const offset = 6;
 const Home = () => {
@@ -104,6 +115,9 @@ const Home = () => {
                   .map((movie) => (
                     <Box
                       key={movie.id}
+                      variants={BoxVariants}
+                      whileHover="hover"
+                      initial="normal"
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
                     />
                   ))}
